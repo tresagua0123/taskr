@@ -1,3 +1,4 @@
+<!--
 <tr>
 <td><%= task.content %></td>
 <td><%= task.state %></td>
@@ -15,3 +16,40 @@ data: {confirm: "Are you sure you want to delete this task?"} %></td>
     change_task_path(task, state:"doing"), method: :put  %></td>
 <% end %>
 </tr>
+-->
+
+<div class="card">
+    <div class="card-header bg-info">
+    <%= link_to edit_task_path(task), 
+    class:"text-light" do %>
+    Created: 
+    <%= time_ago_in_words(task.created_at) %> 
+     ago
+    <% end %>
+    <%= link_to '[X]', task_path(task), method: :delete, 
+    data: {confirm: 'Are you sure?'}, class:"text-danger" %>
+    </div>
+    <div class="card-body"><%= task.content  %></div>
+        <div class="card-footer text-center">
+
+        <% if task.state == 'doing' %>
+        <div class="btn-group" role="group" aria-label="Basic example">
+        <%=link_to (fa_icon "arrow-left"),
+        change_task_path(task, state:"to_do"), method: :put, 
+        class: 'btn btn-info'  %>
+        <%=link_to (fa_icon "arrow-right"),
+        change_task_path(task, state:"done"), method: :put, 
+        class: 'btn btn-info'  %>
+        </div>
+        <% elsif task.state == 'done' %>
+            <%=link_to (fa_icon "arrow-left"),
+            change_task_path(task, state:"doing"), method: :put,
+            class: 'btn btn-info ' %>
+        <% else %>
+            <%=link_to (fa_icon "arrow-right"),
+            change_task_path(task, state:"doing"), method: :put,
+            class: 'btn btn-info '  %>
+        <% end %>
+        
+        </div>
+</div>
